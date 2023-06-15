@@ -1,0 +1,179 @@
+{
+	"info": {
+		"_postman_id": "f398d09e-cd9e-4616-a26b-e0ca214ccd8d",
+		"name": "Postgram Collections Api Testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21396215"
+	},
+	"item": [
+		{
+			"name": "Smoke",
+			"item": [
+				{
+					"name": "GetPosts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Verify status code should be 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 1350ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1350);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify the users of the posts \", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data[0].name).to.eql(\"Nishit Kadam\");\r",
+									"\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data[1].name).to.eql(\"Likitha Devegowda\");\r",
+									"\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data[3].name).to.eql(\"Soorya Raysam\");\r",
+									"\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify the title of the posts \", function () {\r",
+									"       var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data[2].title).to.eql(\"Brandenburg Gate\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify the number of the pages \", function () {\r",
+									"       var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.numberOfPages).to.eql(2);\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/posts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Regression",
+			"item": [
+				{
+					"name": "CreatePost",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyY2hpdC5yYXV0QGFiYy5jb20iLCJpZCI6IjYyYTRlMmEwNTIwNWE2YWI3MDUyMWQxYyIsImlhdCI6MTY1NTAzODU2MywiZXhwIjoxNjU1MDQyMTYzfQ.DhmPHs0dYshyChQT90rPFtlSQN9UKV-AtDICPHwS4Y0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"data\": [\r\n        {\r\n            \"title\": \"Trimbakeshwar Temple\",\r\n            \"message\": \" Trimbakeshwar Temple is dedicated to the God Shiva._/\\\\_\",\r\n            \"name\": \"Archit Raut\",\r\n            \"tags\": [\r\n                \"India\",\r\n                \"Temple\",\r\n                \"Hindu\",\r\n                \"Nasik\",\r\n                \"Travel\"\r\n            ]\r\n        },\r\n\r\n        {\r\n            \"title\": \"Test\",\r\n            \"message\": \"Test2\",\r\n            \"name\": \"Archit Raut\",\r\n            \"tags\": [\r\n                \"India2\",\r\n                \"Temple2\",\r\n                \"Hindu22\",\r\n                \"Nasik2\",\r\n                \"Travel2\"\r\n            ]\r\n        }\r\n    ],\r\n    \"currentPage\": null,\r\n    \"numberOfPages\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/posts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeletePost",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyY2hpdC5yYXV0QGFiYy5jb20iLCJpZCI6IjYyYTRlMmEwNTIwNWE2YWI3MDUyMWQxYyIsImlhdCI6MTY1NTAzODU2MywiZXhwIjoxNjU1MDQyMTYzfQ.DhmPHs0dYshyChQT90rPFtlSQN9UKV-AtDICPHwS4Y0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:5000/posts/62a342a84131818e82a89713",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"posts",
+								"62a342a84131818e82a89713"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

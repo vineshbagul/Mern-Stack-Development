@@ -1,0 +1,44 @@
+version: "3.8"
+services:
+# MongoDB services
+  mongodb:
+    image: "mongo:4.4-bionic"
+    networks:
+       - mern-app
+    restart: always
+    volumes:
+       - data:/data/db
+
+  server:
+    image: api-server 
+    build: ./server
+    ports:
+       - "5000:5000"
+    networks:
+       - mern-app
+    volumes: 
+       - logs:/app/logs
+       - ./server:/app
+       - /app/node_modules
+    depends_on:
+       - mongodb
+
+  client:
+    image: react-app
+    build: ./client
+    ports:
+      - "3000:3000"
+    networks:
+      - mern-app
+    volumes: 
+      - ./client/src:/app/src
+    stdin_open: true
+    tty: true
+    depends_on:
+     - server
+networks:
+  mern-app:
+    driver: bridge
+volumes:
+ data:
+ logs:
